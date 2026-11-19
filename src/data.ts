@@ -67,6 +67,17 @@ export const experience = [
   },
 ]
 
+// Listed only in builds that include the launch-rush demo page (VITE_LAUNCH_RUSH_API set, see vite.config.ts).
+const launchRush = {
+  id: 'launch-rush',
+  name: 'launch-rush',
+  tagline: 'live launch-day order pipeline demo',
+  blurb:
+    'A live, breakable launch-day order pipeline: stock reservation with a waitlist, a mock payment provider with signed webhooks, queues with retries, a simulated ERP and a proof scoreboard. Payments are simulated and nothing is sold.',
+  tags: ['Node.js', 'Express', 'PostgreSQL', 'Redis', 'BullMQ', 'SSE', 'React'],
+  href: '/launch-rush.html',
+}
+
 export const projects = [
   {
     id: 'calendlyIntegration',
@@ -104,6 +115,7 @@ export const projects = [
     tags: ['Node.js', 'Express', 'Nodemailer', 'Vercel'],
     href: 'https://github.com/divyanshsharma11/fetchAndSendStock',
   },
+  ...(import.meta.env.VITE_LAUNCH_RUSH_API ? [launchRush] : []),
 ]
 
 export const skills = [
@@ -158,7 +170,7 @@ export const integrations: Connector[] = [
   ...projects.map((p): Connector => ({
     key: p.id,
     label: p.name,
-    section: 'projects',
+    section: p.id === 'launch-rush' ? 'launch-rush' : 'projects',
     targets: [p.id],
     note: `Personal project: ${p.tagline}`,
   })),

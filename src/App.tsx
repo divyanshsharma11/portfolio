@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Command as CmdIcon, X } from 'lucide-react'
 import Core from './components/Core'
@@ -15,6 +15,9 @@ import { profile } from './data'
 import { coreBesideHero } from './layout'
 
 const IDS = SECTIONS.map((s) => s.id)
+// Loaded only when the demo is opened, so its session and live stream start then (see vite.config.ts for the gate).
+const LAUNCH_RUSH_API: string | undefined = import.meta.env.VITE_LAUNCH_RUSH_API
+const LaunchRushView = LAUNCH_RUSH_API ? lazy(() => import('./launch-rush/LaunchRushView')) : null
 const external = (url: string) => window.open(url, '_blank', 'noopener,noreferrer')
 const fromHash = (): SectionId | null => {
   const h = window.location.hash.slice(1) as SectionId
@@ -117,7 +120,7 @@ export default function App() {
       </div>
 
       <AnimatePresence>
-        {active && (
+        {active && active !== 'launch-rush' && (
           <motion.aside
             key="panel"
             className="panel"
@@ -143,6 +146,12 @@ export default function App() {
           </motion.aside>
         )}
       </AnimatePresence>
+
+      {LaunchRushView && LAUNCH_RUSH_API && active === 'launch-rush' && (
+        <Suspense fallback={null}>
+          <LaunchRushView apiBase={LAUNCH_RUSH_API} onClose={() => open(null)} />
+        </Suspense>
+      )}
 
       <StatusBar />
 
