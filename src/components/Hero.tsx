@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import { motion } from 'framer-motion'
 import { FileText, RotateCcw } from 'lucide-react'
 import { useResume } from '../lib/resume'
-import { profile, certification, workPlatforms } from '../data'
+import { profile, certification, workPlatforms, platformsIntegrated } from '../data'
 import { ago, log, setLink, system, useNow, useSystem } from '../lib/system'
 import { TITLES, type SectionId } from '../sections'
 import { coreBesideHero, mapMinWidth } from '../layout'
@@ -19,7 +19,7 @@ const CREDENTIALS: Record<string, string> = { 'gcp-cdl': `${certification.name} 
 const AVAILABILITY: Record<string, string> = { open_to_work: `Open to roles · ${profile.location}` }
 const formatYears = (n: number) => `${n}+ years in production backends`
 const summarize = (list: { label: string }[]) =>
-  `${list.length} platforms, incl. ${list
+  `${platformsIntegrated} platforms, incl. ${list
     .slice(0, 3)
     .map((i) => i.label)
     .join(' · ')}`

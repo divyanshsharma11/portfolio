@@ -179,9 +179,12 @@ export const integrations: Connector[] = [
 // Platforms integrated at work are exactly the experience connectors on the ring, so the count can't drift from it.
 export const workPlatforms = integrations.filter((i) => i.section === 'experience')
 
+// Total platforms integrated at work; the ring shows a selection of them.
+export const platformsIntegrated = '20+'
+
 export const stats = [
   { value: '4+', label: 'Years in production backends (since Jul 2022)' },
-  { value: String(workPlatforms.length), label: 'Third-party platforms integrated at work' },
+  { value: platformsIntegrated, label: 'Third-party platforms integrated at work' },
   { value: '30%', label: 'Performance gain from Redis + BullMQ' },
   { value: '3', label: 'Companies, from enterprise to AI startups' },
 ]
